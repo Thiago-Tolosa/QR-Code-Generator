@@ -323,6 +323,13 @@ select {
   font-weight: 600;
 }
 
+.field select,
+.field input,
+.modal,
+.hero-card {
+  color-scheme: dark;
+}
+
 .field input[type="text"],
 .field input[type="file"],
 .field select {
@@ -331,6 +338,19 @@ select {
   padding: 12px 14px;
   border-radius: 14px;
   border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #ecf3ff;
+  background: rgba(255, 255, 255, 0.04);
+  color-scheme: dark;
+}
+
+.field select option {
+  color: #ecf3ff;
+  background: #0d182b;
+}
+
+.field select {
+  appearance: none;
+  -webkit-appearance: none;
   color: #ecf3ff;
   background: rgba(255, 255, 255, 0.04);
 }
