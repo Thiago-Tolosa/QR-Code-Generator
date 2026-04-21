@@ -37,16 +37,12 @@ type Props = {
   backgroundColor: string;
   setBackgroundColor: (value: string) => void;
 
-  qrSize: number;
-  setQrSize: (value: number) => void;
-
-  margin: number;
-  setMargin: (value: number) => void;
-
   imageState: FileImageState;
   setImageState: (value: FileImageState) => void;
 
   removeCenterImage: () => void;
+  applyQrChanges: () => void;
+
   qrRef: React.RefObject<HTMLDivElement | null>;
   downloadPng: () => void;
   downloadSvg: () => void;
@@ -73,13 +69,10 @@ export function QrModal({
   setCornersDotColor,
   backgroundColor,
   setBackgroundColor,
-  qrSize,
-  setQrSize,
-  margin,
-  setMargin,
   imageState,
   setImageState,
   removeCenterImage,
+  applyQrChanges,
   qrRef,
   downloadPng,
   downloadSvg,
@@ -127,13 +120,10 @@ export function QrModal({
               setCornersDotColor={setCornersDotColor}
               backgroundColor={backgroundColor}
               setBackgroundColor={setBackgroundColor}
-              qrSize={qrSize}
-              setQrSize={setQrSize}
-              margin={margin}
-              setMargin={setMargin}
               imageState={imageState}
               setImageState={setImageState}
               removeCenterImage={removeCenterImage}
+              applyQrChanges={applyQrChanges}
             />
           </section>
 

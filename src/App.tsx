@@ -29,8 +29,6 @@ function App() {
     useState("#111827");
   const [backgroundColor, setBackgroundColor] =
     useState("#ffffff");
-  const [qrSize, setQrSize] = useState(320);
-  const [margin, setMargin] = useState(8);
   const [imageState, setImageState] =
     useState<FileImageState>({
       previewUrl: "",
@@ -40,67 +38,54 @@ function App() {
     ? imageState.previewUrl
     : "";
 
-  const qrOptions = useMemo(
-    () => ({
-      width: qrSize,
-      height: qrSize,
-      type: "svg" as const,
-      data: data.trim() || DEFAULT_DATA,
-      margin,
-      qrOptions: {
-        errorCorrectionLevel: "H" as const,
-      },
-      image: effectiveImage || undefined,
-      imageOptions: {
-        crossOrigin: "anonymous",
-        margin: 6,
-        imageSize: 0.28,
-        hideBackgroundDots: true,
-      },
-      dotsOptions: {
-        type: isCustomEnabled ? dotsType : "square",
-        color: isCustomEnabled ? dotsColor : "#000000",
-      },
-      cornersSquareOptions: {
-        type: isCustomEnabled
-          ? cornersSquareType
-          : "square",
-        color: isCustomEnabled
-          ? cornersSquareColor
-          : "#000000",
-      },
-      cornersDotOptions: {
-        type: isCustomEnabled
-          ? cornersDotType
-          : "square",
-        color: isCustomEnabled
-          ? cornersDotColor
-          : "#000000",
-      },
-      backgroundOptions: {
-        color: isCustomEnabled
-          ? backgroundColor
-          : "#ffffff",
-      },
-    }),
-    [
-      data,
-      qrSize,
-      margin,
-      effectiveImage,
-      isCustomEnabled,
-      dotsType,
-      dotsColor,
-      cornersSquareType,
-      cornersSquareColor,
-      cornersDotType,
-      cornersDotColor,
-      backgroundColor,
-    ]
+  const buildQrOptions = () => ({
+    width: 420,
+    height: 420,
+    type: "svg" as const,
+    data: data.trim() || DEFAULT_DATA,
+    margin: 0,
+    qrOptions: {
+      errorCorrectionLevel: "H" as const,
+    },
+    image: effectiveImage || undefined,
+    imageOptions: {
+      crossOrigin: "anonymous",
+      margin: 6,
+      imageSize: 0.65,
+      hideBackgroundDots: true,
+    },
+    dotsOptions: {
+      type: isCustomEnabled ? dotsType : "square",
+      color: isCustomEnabled ? dotsColor : "#000000",
+    },
+    cornersSquareOptions: {
+      type: isCustomEnabled ? cornersSquareType : "square",
+      color: isCustomEnabled ? cornersSquareColor : "#000000",
+    },
+    cornersDotOptions: {
+      type: isCustomEnabled ? cornersDotType : "square",
+      color: isCustomEnabled ? cornersDotColor : "#000000",
+    },
+    backgroundOptions: {
+      color: isCustomEnabled ? backgroundColor : "#ffffff",
+    },
+  });
+
+  const [appliedQrOptions, setAppliedQrOptions] = useState(
+    buildQrOptions()
+  );
+
+  const memoAppliedQrOptions = useMemo(
+    () => appliedQrOptions,
+    [appliedQrOptions]
   );
 
   const { qrRef, downloadPng, downloadSvg } =
-    useQrCode(qrOptions, isModalOpen);
+    useQrCode(memoAppliedQrOptions, isModalOpen);
+
+  function applyQrChanges() {
+    setAppliedQrOptions(buildQrOptions());
+  }
 
   useEffect(() => {
     if (!isModalOpen) return;
@@ -145,9 +130,42 @@ function App() {
     setCornersSquareColor("#111827");
     setCornersDotColor("#111827");
     setBackgroundColor("#ffffff");
-    setQrSize(320);
-    setMargin(8);
     removeCenterImage();
+
+    setAppliedQrOptions({
+      width: 420,
+      height: 420,
+      type: "svg",
+      data: DEFAULT_DATA,
+      margin: 0,
+      qrOptions: {
+        errorCorrectionLevel: "H",
+      },
+      image: undefined,
+      imageOptions: {
+        crossOrigin: "anonymous",
+        margin: 6,
+        imageSize: 0.65,
+        hideBackgroundDots: true,
+      },
+      dotsOptions: {
+        type: "square",
+        color: "#000000",
+      },
+      cornersSquareOptions: {
+        type: "square",
+        color: "#000000",
+      },
+      cornersDotOptions: {
+        type: "square",
+        color: "#000000",
+      },
+      backgroundOptions: {
+        color: "#ffffff",
+      },
+    });
+
+    setData(DEFAULT_DATA);
   }
 
   return (
@@ -175,13 +193,10 @@ function App() {
           setCornersDotColor={setCornersDotColor}
           backgroundColor={backgroundColor}
           setBackgroundColor={setBackgroundColor}
-          qrSize={qrSize}
-          setQrSize={setQrSize}
-          margin={margin}
-          setMargin={setMargin}
           imageState={imageState}
           setImageState={setImageState}
           removeCenterImage={removeCenterImage}
+          applyQrChanges={applyQrChanges}
           qrRef={qrRef}
           downloadPng={downloadPng}
           downloadSvg={downloadSvg}

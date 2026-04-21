@@ -11,9 +11,10 @@ export function useQrCode(
   useEffect(() => {
     if (!qrCodeRef.current) {
       qrCodeRef.current = new QRCodeStyling(options);
-    } else {
-      qrCodeRef.current.update(options);
+      return;
     }
+
+    qrCodeRef.current.update(options);
   }, [options]);
 
   useEffect(() => {
@@ -22,7 +23,7 @@ export function useQrCode(
 
     qrRef.current.innerHTML = "";
     qrCodeRef.current.append(qrRef.current);
-  }, [options, isModalOpen]);
+  }, [isModalOpen]);
 
   const downloadPng = () =>
     qrCodeRef.current?.download({
