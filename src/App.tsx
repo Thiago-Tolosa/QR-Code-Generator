@@ -170,7 +170,13 @@ function App() {
 
   return (
     <main className="app-shell">
-      <Hero openModal={() => setIsModalOpen(true)} />
+      <div className="app-content">
+        <Hero openModal={() => setIsModalOpen(true)} />
+
+        <footer className="app-footer">
+          <p>© 2026 QR Studio • Thiago Tolosa</p>
+        </footer>
+      </div>
 
       {isModalOpen && (
         <QrModal
