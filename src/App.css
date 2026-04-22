@@ -891,9 +891,17 @@ select {
 
 .app-footer p {
   margin: 0;
-  color: #9fb4d4;
+  color: #97c1ff;
   font-size: 0.95rem;
   line-height: 1.6;
+}
+
+.app-footer p a {
+  text-decoration: none;
+}
+
+.app-footer p a:hover {
+  color: white;
 }
 
 @media (max-width: 980px) {

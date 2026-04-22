@@ -174,7 +174,7 @@ function App() {
         <Hero openModal={() => setIsModalOpen(true)} />
 
         <footer className="app-footer">
-          <p>© 2026 QR Studio • Thiago Tolosa</p>
+          <p>© 2026 QR Studio • <a target="blank" href="https://github.com/Thiago-Tolosa">Thiago Tolosa</a></p>
         </footer>
       </div>
 
